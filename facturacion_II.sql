@@ -65,6 +65,7 @@ create table venta (
 
 )
 
+alter table venta add constraint pk_venta primary key (id_factura);
 alter table venta add constraint fk_codigo_cliente foreign key (codigo_cliente) references clientes (codigo_cliente);
 alter table venta add constraint fk_medio_de_pago foreign key (medio_de_pago) references medio_de_pago) (codigo_medio_de_pago); 
 
@@ -79,6 +80,8 @@ create table detalle_de_venta (
 	precio real
 
 )
+
+alter table add constraint pk_detalle_de_venta primary key (id_factura, codigo_producto);
 
 -------------------------------------------------------------------------------------------------
 
@@ -95,7 +98,7 @@ alter table add constraint pk_medio_de_pago primary key (codigo_medio_de_pago);
 
 --------------------------------------------------------------------------------------------------
 
-create table tiempo (
+/*create table tiempo (
 
 	id_fecha integer,
 	dia integer,
@@ -103,6 +106,6 @@ create table tiempo (
 	trimestre integer,
 	anio integer
 
-)
+)*/
 
 --------------------------------------------------------------------------------------------------
