@@ -50,7 +50,8 @@ create table ventas (
 	forma_de_pago varchar(30)
 )
 
---Faltan agregar claves primarias y foraneas
+alter table add constraint pk_ventas primary key (nro_factura);
+alter table add constraint fk_nro_cliente foreign key (nro_cliente) references clientes (nro_cliente); 
 
 ------------------------------------------------------------------------------------------
 
@@ -64,6 +65,7 @@ create table detalle_venta (
 
 )
 
---Faltan agregar claves primarias y foraneas
+
+alter table add constraint pk_ventas primary key (nro_factura, nro_producto);
 
 ------------------------------------------------------------------------------------------
