@@ -78,24 +78,27 @@ $body$
 declare
 	i integer;
 	j integer;
-	producto integer;
+	producto_en_detalle integer;
 	
 begin
 
-	for i in 22..23 loop
+	for i in 24..25 loop
 
 		insert into venta values((select fecha_al_azar()), i, (select floor(random() * (4-1+1)) + 1), ('venta: ' || i), (select floor(random() * (13-10+1)) + 10));
 
 		for j in 1..6 loop
 
-			insert into detalle_de_venta values(i, 
-							   (select codigo_producto from producto 
-								where producto.codigo_producto not in (select codigo_producto
-									from detalle_de_venta where id_factura = i)
-								order by random()
-								limit 1), 
+			producto_en_detalle := (select codigo_producto from producto 
+							where producto.codigo_producto not in (select codigo_producto
+								from detalle_de_venta where id_factura = i)
+							order by random()
+							limit 1);
 
-							   ('Detalle de venta'), 
+			insert into detalle_de_venta values(i, 
+							   (producto_en_detalle), 
+
+							   (select nombre from producto
+								where producto.codigo_producto = producto_en_detalle), 
 
 							   (select floor(random() * (50-1+1)) + 1), 
 
@@ -136,14 +139,6 @@ where producto.codigo_producto in (select codigo_producto
 )
 
 
-
-select nombre from producto
-where producto.codigo_producto in (select codigo_producto
-	from detalle_de_venta where codigo_producto = producto)
-
-/*Esta seria la consulta para quedarme con el nombre de producto para mostrarlo en el detalle de venta*/
-select nombre from producto
-where producto.codigo_producto = producto --lo obtengo previamente de una variable
 
 
 
