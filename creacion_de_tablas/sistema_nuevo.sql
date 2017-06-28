@@ -1,4 +1,4 @@
-
+﻿
 /*Sistema facturacion II*/
 
 /*Creacion de tablas*/
@@ -34,7 +34,7 @@ create table producto (
 	nombre varchar(30),
 	codigo_categoria integer,
 	codigo_subcategoria integer,
-	precio_actual real,
+	precio_actual real
 
 )
 
@@ -67,7 +67,7 @@ create table venta (
 
 alter table venta add constraint pk_venta primary key (id_factura);
 alter table venta add constraint fk_codigo_cliente foreign key (codigo_cliente) references clientes (codigo_cliente);
-alter table venta add constraint fk_medio_de_pago foreign key (medio_de_pago) references medio_de_pago) (codigo_medio_de_pago); 
+alter table venta add constraint fk_medio_de_pago foreign key (medio_de_pago) references medio_de_pago (codigo_medio_de_pago); 
 
 -------------------------------------------------------------------------------------------------
 
@@ -81,7 +81,9 @@ create table detalle_de_venta (
 
 )
 
-alter table add constraint pk_detalle_de_venta primary key (id_factura, codigo_producto);
+alter table detalle_de_venta add constraint pk_detalle_de_venta primary key (id_factura, codigo_producto);
+alter table detalle_de_venta add constraint fk_producto foreign key (codigo_producto) references producto (codigo_producto);
+alter table detalle_de_venta add constraint fk_venta foreign key (id_factura) references venta (id_factura);
 
 -------------------------------------------------------------------------------------------------
 
@@ -89,23 +91,12 @@ create table medio_de_pago (
 
 	codigo_medio_de_pago integer,
 	descripcion varchar(50),
-	valor,
+	valor integer,
+	unidad integer,
 	tipo_operacion varchar(30)
 
 )
 
-alter table add constraint pk_medio_de_pago primary key (codigo_medio_de_pago);
-
---------------------------------------------------------------------------------------------------
-
-/*create table tiempo (
-
-	id_fecha integer,
-	dia integer,
-	mes integer,
-	trimestre integer,
-	anio integer
-
-)*/
+alter table medio_de_pago add constraint pk_medio_de_pago primary key (codigo_medio_de_pago);
 
 --------------------------------------------------------------------------------------------------
