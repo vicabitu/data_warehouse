@@ -1,0 +1,54 @@
+Sistema Viejo Trelew
+1   Matías Mazzaglia
+2   Ian Aguila
+3   Maximiliano Aranda
+4   German Acosta
+5   Tania Bianchini
+
+Sistema Nuevo Comodoro
+1   Juan Perez
+2   Romina Martinez
+3   Jorge Alvarez
+4   Martina Rodriguez
+5   Ramiro Lopez
+6   Ryu Mizuki
+7   Lorena Vidal
+8   Santiago Lopez
+9   Jorge James
+10  Sakura Sakurako
+
+Sistema Nuevo Esquel
+1   Joge Ramirez
+2   Juan Perez (1 comodoro)
+4   Martina Rodriguez (4 comodoro)  
+6   Julia Jones
+8   Marta Lombardi   
+10  Beatriz Pineda
+20  Ornela Pereira  
+23  Ian Aguila (2 del viejo)
+30  Jorge James (9 comodoro) 
+35  Lorena Vidal   (7 comodro)
+
+Tabla equivalencia
+Sistema Viejo       Sistema Nuevo Comodoro      Sistema Nuevo Esquel    Unificado
+1                                                                           100
+                            1                           2                   101
+                                                        1                   102
+2                                                       23                  103
+                            2                                               104
+3                                                                           105
+                            3                                               106
+4                                                                           107
+                            4                           4                   108
+5                                                                           109
+                            5                                               110
+                            6                                               111
+                                                        6                   112
+                            7                           35                  113
+                            8                                               114
+                                                        8                   115
+                            9                           30                  116
+                            10                                              117
+                                                        10                  118
+                                                        20                  119
+                                                        
