@@ -3,7 +3,7 @@
 
 /*Creacion de tablas*/
 
-create table clientes(
+CREATE TABLE clientes(
 
 nro_cliente integer not null,
 nombre varchar(30),
@@ -12,22 +12,22 @@ direccion varchar(30)
 
 );
 
-alter table clientes add constraint pk_clientes primary key (nro_cliente);
+ALTER TABLE clientes add constraint pk_clientes primary key (nro_cliente);
 
 ------------------------------------------------------------------------------------------
-create table categoria (
+CREATE TABLE categoria (
 
 nro_categ integer not null,
 descripcion varchar(30)
 
 );
 
-alter table categoria add constraint pk_categoria primary key (nro_categ);
+ALTER TABLE categoria add constraint pk_categoria primary key (nro_categ);
 
 -------------------------------------------------------------------------------------------
 
 
-create table productos (
+CREATE TABLE productos (
 
 nro_producto integer not null,
 nombre varchar(30),
@@ -36,12 +36,12 @@ precio_actual real
 
 );
 
-alter table productos add constraint pk_productos primary key (nro_producto);
-alter table productos add constraint fk_categoria foreign key (nro_categoria) references categoria (nro_categ);
+ALTER TABLE productos add constraint pk_productos primary key (nro_producto);
+ALTER TABLE productos add constraint fk_categoria foreign key (nro_categoria) references categoria (nro_categ);
 
 --------------------------------------------------------------------------------------------
 
-create table venta (
+CREATE TABLE venta (
 
 fecha_vta date,
 nro_factura integer,
@@ -50,12 +50,12 @@ nombre varchar(30),
 forma_pago varchar(30)
 );
 
-alter table venta add constraint pk_venta primary key (nro_factura);
-alter table venta add constraint fk_nro_cliente foreign key (nro_cliente) references clientes (nro_cliente);
+ALTER TABLE venta add constraint pk_venta primary key (nro_factura);
+ALTER TABLE venta add constraint fk_nro_cliente foreign key (nro_cliente) references clientes (nro_cliente);
 
 ------------------------------------------------------------------------------------------
 
-create table detalle_venta (
+CREATE TABLE detalle_venta (
 
 nro_factura integer,
 nro_producto integer,
@@ -65,7 +65,7 @@ precio real
 
 );
 
-alter table detalle_venta add constraint pk_detalle_venta primary key (nro_factura, nro_producto);
-alter table detalle_venta add constraint fk_nro_factura foreign key (nro_factura) references venta (nro_factura);
+ALTER TABLE detalle_venta add constraint pk_detalle_venta primary key (nro_factura, nro_producto);
+ALTER TABLE detalle_venta add constraint fk_nro_factura foreign key (nro_factura) references venta (nro_factura);
 
 ------------------------------------------------------------------------------------------
