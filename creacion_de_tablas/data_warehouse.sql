@@ -1,6 +1,36 @@
 /*Data Warehouse*/
 
+
 /*Creacion de tablas*/
+
+
+/*Tabla de hechos*/
+
+create table venta(
+
+	fecha_venta integer,
+	id_factura integer,
+	id_cliente integer,
+	nombre varchar(50),
+	id_medio_de_pago integer,
+	id_sucursal integer,
+	id_producto integer,
+	unidad integer,
+	precio real,
+	descripcion varchar(30)
+
+)
+
+alter table venta add constraint pk_venta primary key (fecha_venta, id_factura)
+alter table venta add constraint fk_tiempo foreign key (fecha_venta) references tiempo (id_tiempo)
+alter table venta add constraint fk_cliente foreign key (id_cliente) references clientes (id_cliente)
+alter table venta add constraint fk_medio_de_pago foreign key (id_medio_de_pago) references medio_de_pago (id_medio_de_pago)
+alter table venta add constraint fk_sucursal foreign key (id_sucursal) references sucursal (id_sucursal)
+alter table venta add constraint fk_producto foreign key (id_producto) references producto (id_producto)
+alter table venta add constraint fk_sucursal foreign key (id_sucursal) references sucursal (id_sucursal)
+
+
+---------------------------------------------------------------------------------------------------------------------------------
 
 create table clientes(
 
@@ -32,12 +62,16 @@ create table producto(
 
 	id_producto integer,
 	nombre varchar(30),
-	id_categoria integer
+	id_categoria integer,
+	codigo_subcategoria integer,
+	precio_actual real
 
 )
 
 alter table producto add constraint pk_producto primary key (id_producto)
 alter table producto add constraint fk_id_cateoria foreign key (id_categoria) references categoria (id_categoria)
+--alter table producto add constraint fk_codigo_subcategoria foreign key (codigo_subcategoria) references categoria (id_categoria)
+
 
 ---------------------------------------------------------------------------------------------------------------------------------
 
@@ -50,34 +84,29 @@ create table categoria(
 )
 
 alter table categoria add constraint pk_categoria primary key (id_categoria)
+alter table categoria add constraint fk_subcategoria foreign key (id_subcategoria) references subcategoria (id_subcategoria)
 
 ---------------------------------------------------------------------------------------------------------------------------------
 
-/*Tabla de hechos*/
+create table subcategoria(
 
-create table venta(
-
-	fecha_venta date,
-	id_factura integer,
-	id_cliente integer,
-	id_medio_de_pago integer,
-	id_sucursal integer,
-	nombre
-
+	id_subcategoria integer,
+	descripcion varchar(50)
 )
 
+alter table add constraint pk_subcategoria primary key (id_subcategoria)
 ---------------------------------------------------------------------------------------------------------------------------------
 
-create table detalle_de_venta(
 
-	id_factura integer,
-	id_producto integer,
-	descripcion varchar(50),
-	unidad integer,
-	precio real
+create table tiempo(
+
+	id_tiempo integer,
+	fecha date,
+	trimestre integer
 
 )
 
+alter table add constraint pk_tiempo primary key (id_tiempo)
 ---------------------------------------------------------------------------------------------------------------------------------
 
 create table medio_de_pago(
@@ -86,10 +115,10 @@ create table medio_de_pago(
 	descripcion varchar(50),
 	valor integer,
 	unidad integer,
-	tipo_de_operacion
+	tipo_de_operacion varchar(50)
 
 )
-
+alter table medio_de_pago add constraint pk_medio_de_pago primary key (id_medio_de_pago)
 
 ---------------------------------------------------------------------------------------------------------------------------------
 
@@ -136,7 +165,8 @@ create table sucursal(
 
 	id_sucursal integer,
 	id_ciudad integer,
-	direccion varchar(50)
+	direccion varchar(50),
+	superficie real
 
 )
 
