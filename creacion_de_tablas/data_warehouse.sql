@@ -1,4 +1,4 @@
-/*Data Warehouse*/
+﻿/*Data Warehouse*/
 
 
 /*Creacion de tablas*/
@@ -8,26 +8,22 @@
 
 create table venta(
 
-	fecha_venta integer,
-	id_factura integer,
+	id_tiempo integer,
 	id_cliente integer,
-	nombre varchar(50),
 	id_medio_de_pago integer,
 	id_sucursal integer,
 	id_producto integer,
-	unidad integer,
-	precio real,
-	descripcion varchar(30)
+	monto_vendido real,
+	cantidad_vendida integer,
+	fecha_venta date
 
 )
 
-alter table venta add constraint pk_venta primary key (fecha_venta, id_factura)
-alter table venta add constraint fk_tiempo foreign key (fecha_venta) references tiempo (id_tiempo)
-alter table venta add constraint fk_cliente foreign key (id_cliente) references clientes (id_cliente)
-alter table venta add constraint fk_medio_de_pago foreign key (id_medio_de_pago) references medio_de_pago (id_medio_de_pago)
-alter table venta add constraint fk_sucursal foreign key (id_sucursal) references sucursal (id_sucursal)
-alter table venta add constraint fk_producto foreign key (id_producto) references producto (id_producto)
-alter table venta add constraint fk_sucursal foreign key (id_sucursal) references sucursal (id_sucursal)
+alter table venta add constraint fk_tiempo foreign key (id_tiempo) references tiempo (id_tiempo);
+alter table venta add constraint fk_cliente foreign key (id_cliente) references clientes (id_cliente);
+alter table venta add constraint fk_medio_de_pago foreign key (id_medio_de_pago) references medio_de_pago (id_medio_de_pago);
+alter table venta add constraint fk_sucursal foreign key (id_sucursal) references sucursal (id_sucursal);
+alter table venta add constraint fk_producto foreign key (id_producto) references producto (id_producto);
 
 
 ---------------------------------------------------------------------------------------------------------------------------------
@@ -36,7 +32,6 @@ create table clientes(
 
 	id_cliente integer,
 	nombre varchar(30),
-	apellido varchar(30),
 	id_tipo_cliente integer,
 	direccion varchar (30)
 
@@ -50,7 +45,7 @@ alter table clientes add constraint fk_clientes foreign key (id_tipo_cliente) re
 create table tipo_cliente(
 
 	id_tipo_cliente integer,
-	descripcion varchar(50),
+	descripcion varchar(50)
 
 )
 
@@ -63,15 +58,12 @@ create table producto(
 	id_producto integer,
 	nombre varchar(30),
 	id_categoria integer,
-	codigo_subcategoria integer,
-	precio_actual real
+	id_subcategoria integer
 
 )
 
 alter table producto add constraint pk_producto primary key (id_producto)
-alter table producto add constraint fk_id_cateoria foreign key (id_categoria) references categoria (id_categoria)
---alter table producto add constraint fk_codigo_subcategoria foreign key (codigo_subcategoria) references categoria (id_categoria)
-
+alter table producto add constraint fk_id_cateoria foreign key (id_categoria, id_subcategoria) references categoria (id_categoria, id_subcategoria)
 
 ---------------------------------------------------------------------------------------------------------------------------------
 
@@ -83,30 +75,32 @@ create table categoria(
 
 )
 
-alter table categoria add constraint pk_categoria primary key (id_categoria)
-alter table categoria add constraint fk_subcategoria foreign key (id_subcategoria) references subcategoria (id_subcategoria)
+alter table categoria add constraint pk_categoria primary key (id_categoria, id_subcategoria)
 
 ---------------------------------------------------------------------------------------------------------------------------------
 
-create table subcategoria(
+--La tabla subcategoria ya no va mas 
+
+/*create table subcategoria(
 
 	id_subcategoria integer,
 	descripcion varchar(50)
 )
 
-alter table add constraint pk_subcategoria primary key (id_subcategoria)
+alter table add constraint pk_subcategoria primary key (id_subcategoria)*/
 ---------------------------------------------------------------------------------------------------------------------------------
 
 
 create table tiempo(
 
 	id_tiempo integer,
-	fecha date,
+	mes integer,
+	anio integer,
 	trimestre integer
 
 )
 
-alter table add constraint pk_tiempo primary key (id_tiempo)
+alter table tiempo add constraint pk_tiempo primary key (id_tiempo)
 ---------------------------------------------------------------------------------------------------------------------------------
 
 create table medio_de_pago(
@@ -118,6 +112,7 @@ create table medio_de_pago(
 	tipo_de_operacion varchar(50)
 
 )
+
 alter table medio_de_pago add constraint pk_medio_de_pago primary key (id_medio_de_pago)
 
 ---------------------------------------------------------------------------------------------------------------------------------
@@ -165,12 +160,26 @@ create table sucursal(
 
 	id_sucursal integer,
 	id_ciudad integer,
-	direccion varchar(50),
-	superficie real
+	direccion varchar(50)
 
 )
 
 alter table sucursal add constraint pk_sucursal primary key (id_sucursal)
 alter table sucursal add constraint fk_id_ciudad foreign key (id_ciudad) references ciudad (id_ciudad)
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+create table equivalencia_clientes(
+
+	cliente_trelew integer,
+	cliente_comodoro integer,
+	cliente_esquel integer,
+	cliente_unificado serial
+	
+)
+
+alter table equivalencia_clientes add constraint pk_equivalencia_clientes primary key (cliente_sistema_viejo, cliente_sistema_nuevo, cliente_unificado)
 
 ---------------------------------------------------------------------------------------------------------------------------------

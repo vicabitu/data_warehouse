@@ -134,13 +134,13 @@ declare
 	
 begin
 
-	for i in 28..28 loop
+	for i in 51..100 loop
 	
 
 		insert into venta values((select fecha_al_azar()), i, (select trunc(random() * (10-1+1)) + 1), ('venta: ' || i), (select trunc(random() * (14-10+1)) + 10));
 
 	
-		for j in 1..10 loop
+		for j in 1..15 loop
 
 			--Selecciono un codigo de producto al azar que ya no este dentro de los seleccionados para la venta
 			producto_en_detalle := (select codigo_producto from producto 

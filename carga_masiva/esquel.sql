@@ -1,4 +1,4 @@
-
+﻿
 /*Carga masiva de la sucursal Comodoro Rivadavia*/ 
 
 /*Sistema de facturacion nuevo (desde enero 2011)*/
@@ -7,37 +7,37 @@
 
 --Alta de tipos de clientes
 
-insert into tipos_cliente values(1, 'Fabrica')
+insert into tipos_cliente values(1, 'Fabrica');
 
-insert into tipos_cliente values(2, 'Pyme')
+insert into tipos_cliente values(2, 'Pyme');
 
-insert into tipos_cliente values(3, 'Cooperativa')
+insert into tipos_cliente values(3, 'Cooperativa');
 
-insert into tipos_cliente values(4, 'Supermercado')
+insert into tipos_cliente values(4, 'Supermercado');
 
 --------------------------------------------------------------------
 
 --Alta de clientes
 
-insert into clientes values(1, 'Jorge Ramirez', 2, 'La Prida 250')
+insert into clientes values(1, 'Jorge Ramirez', 2, 'La Prida 250');
 
-insert into clientes values(2, 'Juan Perez', 3, 'Colombia 1500')
+insert into clientes values(2, 'Juan Perez', 3, 'Colombia 1500');
 
-insert into clientes values(20, 'Ornela Pereira', 1, 'Cooperativa')
+insert into clientes values(20, 'Ornela Pereira', 1, 'Cooperativa');
 
-insert into clientes values(4, 'Martina Rodriguez', 3, 'Mitre 1800')
+insert into clientes values(4, 'Martina Rodriguez', 3, 'Mitre 1800');
 
-insert into clientes values(23, 'Ian Aguila', 4, 'Rivadavia 165')
+insert into clientes values(23, 'Ian Aguila', 4, 'Rivadavia 165');
 
-insert into clientes values(6, 'Julia Jones', 4, 'Mitre 852')
+insert into clientes values(6, 'Julia Jones', 4, 'Mitre 852');
 
-insert into clientes values(35, 'Lorena Vidal', 4, 'Ameghino 350')
+insert into clientes values(35, 'Lorena Vidal', 4, 'Ameghino 350');
 
-insert into clientes values(8, 'Marta Lombardi', 1, 'Irigoyen 741')
+insert into clientes values(8, 'Marta Lombardi', 1, 'Irigoyen 741');
 
-insert into clientes values(30, 'Jorge James', 2, 'Ruta 3')
+insert into clientes values(30, 'Jorge James', 2, 'Ruta 3');
 
-insert into clientes values(10, 'Beatriz Pineda', 4, 'Sargento Cabral 123')
+insert into clientes values(10, 'Beatriz Pineda', 4, 'Sargento Cabral 123');
 
 
 delete from clientes where codigo_cliente = 40
@@ -45,9 +45,9 @@ delete from clientes where codigo_cliente = 40
 
 ------------------------------------------------------------------------------------------------------------------------
 
-insert into categoria values(1, 10, 'frutas')
+insert into categoria values(1, 10, 'frutas');
 
-insert into categoria values(2, 20, 'hortalizas y legumbres')
+insert into categoria values(2, 20, 'hortalizas y legumbres');
 
 
 delete from categoria where codigo_categoria = 3
@@ -100,15 +100,15 @@ select * from producto
 
 ---------------------------------------------------------------------------------------------------------------------------
 
-insert into medio_de_pago values(10, 'Efectivo', 1, 1, 'Compra')
+insert into medio_de_pago values(10, 'Efectivo', 1, 1, 'Compra');
 
-insert into medio_de_pago values(11, 'Tarjeta de credito', 2, 2, 'Compra con tarjeta')
+insert into medio_de_pago values(11, 'Tarjeta de credito', 2, 2, 'Compra con tarjeta');
 
-insert into medio_de_pago values(12, 'Cuenta corriente', 3, 3, 'Compra con cuenta')
+insert into medio_de_pago values(12, 'Cuenta corriente', 3, 3, 'Compra con cuenta');
 
-insert into medio_de_pago values(13, 'Tarjeta de debito', 4, 4, 'Compra con tarjeta de debito')
+insert into medio_de_pago values(13, 'Tarjeta de debito', 4, 4, 'Compra con tarjeta de debito');
 
-insert into medio_de_pago values(14, 'Cheque', 5, 5, 'Compra con cheque')
+insert into medio_de_pago values(14, 'Cheque', 5, 5, 'Compra con cheque');
 
 select * from medio_de_pago
 ----------------------------------------------------------------------------------------------------------------------------
@@ -140,7 +140,7 @@ begin
 		insert into venta values((select fecha_al_azar()), i, (select trunc(random() * (10-1+1)) + 1), ('venta: ' || i), (select trunc(random() * (14-10+1)) + 10));
 
 	
-		for j in 1..10 loop
+		for j in 1..15 loop
 
 			--Selecciono un codigo de producto al azar que ya no este dentro de los seleccionados para la venta
 			producto_en_detalle := (select codigo_producto from producto 
