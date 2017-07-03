@@ -9,13 +9,13 @@
 create table venta(
 
 	id_tiempo integer,
+	fecha_venta date,
 	id_cliente integer,
 	id_medio_de_pago integer,
 	id_sucursal integer,
 	id_producto integer,
 	monto_vendido real,
-	cantidad_vendida integer,
-	fecha_venta date
+	cantidad_vendida integer
 
 )
 
@@ -93,7 +93,7 @@ alter table add constraint pk_subcategoria primary key (id_subcategoria)*/
 
 create table tiempo(
 
-	id_tiempo integer,
+	id_tiempo serial,
 	mes integer,
 	anio integer,
 	trimestre integer
@@ -168,7 +168,7 @@ alter table sucursal add constraint pk_sucursal primary key (id_sucursal)
 alter table sucursal add constraint fk_id_ciudad foreign key (id_ciudad) references ciudad (id_ciudad)
 
 
-
+---------------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------------------
 
 create table equivalencia_clientes(

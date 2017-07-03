@@ -137,3 +137,90 @@ UPDATE equivalencia_productos SET producto_esquel = 20 WHERE producto_comodoro =
 --	SELECT nro_cliente
 --	FROM dblink (myconn, ‘SELECT nro_cliente FROM Clientes’) as
 --                          consulta(nro_cliente integer)
+
+-----------
+
+--CREATE TABLE tmpVentas(
+--    fecha date,
+--    idFactura int,
+--    idCliente int,
+--    idProducto int,
+--    idSucursal int,
+--    medio_de_pago int,
+--    monto real,
+--    cantidad_vendida int,
+--    nombre_producto_vendido int,
+--    categoria int,
+--    subcategoria int,
+--    precio real,
+--    nombre_cliente int,
+--    tipo_cliente int
+--)
+
+CREATE OR REPLACE FUNCTION carga_datawarehouse_trelew() returns void as $$
+DECLARE
+
+BEGIN
+
+  SELECT *
+  INTO tmpVentas
+  FROM DBLINK (conexion_DW_trelew,
+    'SELECT
+    v.fecha_vta as fecha,
+    v.nro_factura as idFactura,
+    v.nro_cliente as idCliente,
+    dv.nro_producto as idProducto, '
+    dv.unidad * dv.precio as monto_vendido,
+    + 0 +'as Sucursal,
+    v.forma_pago as forma_de_pago,
+    dv.unidad as cantidad_vendida,
+    p.nombre as nombre_producto,
+    p.nro_categoria as categoria,'
+    + 0 + 'as subcategoria,
+    dv.precio as precio_producto,
+    c.nombre as nombre_cliente,
+    c.tipo as tipo_cliente,
+    c.direccion as direccion,'
+    + "-" + 'descripcion_tipo_cliente
+
+    FROM ventas v, detalle_venta dv, clientes c, producto p
+
+    WHERE v.idFactura = dv.idFactura and
+          AND v.nro_cliente = c.nro_cliente
+          AND dv.nro_producto = p.nro_producto
+          AND date_part ( ‘month’,   fecha) =  '
+          + pMes +
+          'and date_part (‘year’,  fecha) = '
+          + pAño
+  )
+
+  INSERT INTO clientes
+  SELECT DISTINCT teC.cliente_unificado, v.nombre_cliente, v.tipo_cliente, v.direccion
+  FROM tmpVentas v, equivalencia_clientes teC
+  WHERE v.idCliente = teC.cliente_trelew AND teC.cliente_unificado not in (SELECT id_cliente from clientes)
+
+  INSERT INTO tipo_cliente
+  SELECT DISTINCT v.tipo_cliente, v.descripcion_tipo_cliente
+  FROM tmpVentas v
+  WHERE v.tipo_cliente not in (SELECT id_tipo_cliente FROM tipo_cliente)
+
+  INSERT INTO tiempo
+  SELECT DISTINCT
+  FROM
+
+  INSERT INTO venta
+  SELECT v.idTiempo, v.fecha, teC.cliente_unificado, v.forma_de_pago, v.sucursal, teProductos.producto_unificado, v.monto_vendido, v.cantidad_vendida
+  FROM tmpVentas v, equivalencia_clientes teC, equivalencia_productos teP
+  WHERE v.idCliente = equivalencia_clientes.cliente_trelew AND v.idProducto =equivalencia_productos.producto_trelew
+
+
+  INSERT INTO producto
+  SELECT DISTINCT CDW, nombre, categoria
+  FROM tmpVentas v, equivalencia_productos teP
+  WHERE v.idProducto = teP.producto_trelew AND teP.producto_unificado not in (SELECT id_producto FROM producto)
+
+
+END;
+$$ LANGUAGE plpgsql;
+
+  ---------
