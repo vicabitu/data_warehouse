@@ -79,7 +79,7 @@ alter table categoria add constraint pk_categoria primary key (id_categoria, id_
 
 ---------------------------------------------------------------------------------------------------------------------------------
 
---La tabla subcategoria ya no va mas 
+--La tabla subcategoria ya no va mas
 
 /*create table subcategoria(
 
@@ -148,7 +148,7 @@ create table ciudad(
 	id_provincia integer,
 	descripcion varchar(50)
 
-) 
+)
 
 alter table ciudad add constraint pk_ciudad primary key (id_ciudad)
 alter table ciudad add constraint fk_id_provicnia foreign key (id_provincia) references provincia (id_provincia)
@@ -177,9 +177,22 @@ create table equivalencia_clientes(
 	cliente_comodoro integer,
 	cliente_esquel integer,
 	cliente_unificado serial
-	
+
 )
 
-alter table equivalencia_clientes add constraint pk_equivalencia_clientes primary key (cliente_sistema_viejo, cliente_sistema_nuevo, cliente_unificado)
+alter table equivalencia_clientes add constraint pk_equivalencia_clientes primary key (cliente_unificado)
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+create table equivalencia_productos(
+
+	producto_trelew integer,
+	producto_comodoro integer,
+	producto_esquel integer,
+	producto_unificado serial
+
+)
+
+alter table equivalencia_productos add constraint pk_equivalencia_productos primary key (producto_unificado)
 
 ---------------------------------------------------------------------------------------------------------------------------------

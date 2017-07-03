@@ -93,3 +93,5 @@ END;
 $$ LANGUAGE plpgsql;
 
 SELECT cargaSistemaViejo();
+
+CREATE EXTENSION dblink;

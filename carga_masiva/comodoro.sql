@@ -1,5 +1,5 @@
 ﻿
-/*Carga masiva de la sucursal Comodoro Rivadavia*/ 
+/*Carga masiva de la sucursal Comodoro Rivadavia*/
 
 /*Sistema de facturacion nuevo (desde enero 2011)*/
 
@@ -54,7 +54,7 @@ delete from categoria where codigo_categoria = 3
 
 ---------------------------------------------------------------------------------------------------------------------------
 
---Alta de productos 
+--Alta de productos
 
 insert into producto values(1, 'Manzana', 1, 10, 36.5)
 
@@ -131,19 +131,19 @@ declare
 	unidades_vendidas integer;
 	precio_producto real;
 	nombre_producto_vendido varchar(30);
-	
+
 begin
 
 	for i in 51..100 loop
-	
+
 
 		insert into venta values((select fecha_al_azar()), i, (select trunc(random() * (10-1+1)) + 1), ('venta: ' || i), (select trunc(random() * (14-10+1)) + 10));
 
-	
+
 		for j in 1..15 loop
 
 			--Selecciono un codigo de producto al azar que ya no este dentro de los seleccionados para la venta
-			producto_en_detalle := (select codigo_producto from producto 
+			producto_en_detalle := (select codigo_producto from producto
 							where producto.codigo_producto not in (select codigo_producto
 								from detalle_de_venta where id_factura = i)
 							order by random()
@@ -155,13 +155,13 @@ begin
 
 			nombre_producto_vendido := (select nombre from producto where producto.codigo_producto = producto_en_detalle);
 
-			insert into detalle_de_venta values(i, (producto_en_detalle), ('Producto vendido: ' || nombre_producto_vendido), (unidades_vendidas), 
+			insert into detalle_de_venta values(i, (producto_en_detalle), ('Producto vendido: ' || nombre_producto_vendido), (unidades_vendidas),
 							   (unidades_vendidas * precio_producto));
 
-		end loop;  
+		end loop;
 
 	end loop;
-	
+
 
 	return;
 end $body$
@@ -178,7 +178,7 @@ select carga_de_ventas()
 select floor(random() * (15-1+1)) + 1
 
 
-producto := (select nro_producto from producto 
+producto := (select nro_producto from producto
 			where producto.nro_producto not in (select codigo_producto
 				from detalle_de_venta where id_factura = i)
 			order by random()
@@ -193,7 +193,4 @@ where producto.codigo_producto in (select codigo_producto
 )
 
 
-
-
-
-			 
+CREATE EXTENSION dblink;
