@@ -20,25 +20,15 @@ insert into tipos_cliente values(4, 'Supermercado')
 --Alta de clientes
 
 insert into clientes values(1, 'Juan Perez', 3, 'Colombia 1500')
-
 insert into clientes values(2, 'Romina Martinez', 1, '9 de Julio 500')
-
 insert into clientes values(3, 'Jorge Alvarez', 2, 'Pasaje Cordoba 50')
-
 insert into clientes values(4, 'Martina Rodriguez', 3, 'Mitre 1800')
-
 insert into clientes values(5, 'Ramiro Lopez', 2, 'Alem 353')
-
 insert into clientes values(6, 'Ryu Mizuki', 4, 'Colombia 2000')
-
 insert into clientes values(7, 'Lorena Vidal', 4, 'Ameghino 350')
-
 insert into clientes values(8, 'Santiago Lopez', 1, 'Tucuman 256')
-
 insert into clientes values(9, 'Jorge James', 2, 'Ruta 3')
-
 insert into clientes values(10, 'Sakura Sakurako', 4, 'Perito Moreno 856')
-
 
 delete from clientes where codigo_cliente = 40
 
@@ -57,43 +47,24 @@ delete from categoria where codigo_categoria = 3
 --Alta de productos
 
 insert into producto values(1, 'Manzana', 1, 10, 36.5)
-
 insert into producto values(2, 'Banana', 1, 10, 36.5)
-
 insert into producto values(3, 'Frutilla', 1, 10, 50)
-
 insert into producto values(7, 'Limon', 1, 10, 42)
-
 insert into producto values(8, 'Mandarina', 1, 10, 35.75)
-
 insert into producto values(9, 'Naranja', 1, 10, 37.80)
-
 insert into producto values(10, 'Pomelo', 1, 10, 50)
-
 insert into producto values(11, 'Durazno', 1, 12, 70)
-
 insert into producto values(12, 'Ciruela', 1, 12, 40)
-
 insert into producto values(4, 'Berenjena', 2, 20, 45.5)
-
 insert into producto values(5, 'Espinaca', 2, 20, 38)
-
 insert into producto values(6, 'Choclo', 2, 20, 46)
-
 insert into producto values(13, 'Zapallito', 2, 21, 38.25)
-
 insert into producto values(14, 'Zapallo', 2, 21, 30)
-
 insert into producto values(15, 'Tomate', 2, 21, 55)
-
 insert into producto values(16, 'Lechuga', 2, 22, 22)
-
 insert into producto values(17, 'zanahoria', 2, 23, 15)
-
 insert into producto values(18, 'Papa', 2, 24, 21.50)
-
 insert into producto values(19, 'Pepino', 2, 21, 42)
-
 insert into producto values(20, 'Pimientos', 2, 22, 34)
 
 select * from producto

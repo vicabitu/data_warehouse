@@ -76,9 +76,45 @@ UPDATE equivalencia_clientes SET cliente_esquel = 35 WHERE cliente_comodoro = 7
 
 ----
 
-INSERT INTO equivalencia_productos
+INSERT INTO equivalencia_productos (producto_trelew)
+SELECT  nro_producto
+FROM dblink ('conexion_DW_trelew','
+SELECT nro_producto
+FROM productos'
+) as consulta(nro_producto int)
+
+INSERT INTO equivalencia_productos (producto_comodoro)
+SELECT  codigo_producto
+FROM dblink ('conexion_DW_comodoro','
+SELECT codigo_producto
+FROM productos'
+) as consulta(codigo_producto int)
+
+UPDATE equivalencia_productos SET producto_esquel = 1 WHERE producto_comodoro = 1
+UPDATE equivalencia_productos SET producto_esquel = 2 WHERE producto_comodoro = 2
+UPDATE equivalencia_productos SET producto_esquel = 3 WHERE producto_comodoro = 3
+UPDATE equivalencia_productos SET producto_esquel = 4 WHERE producto_comodoro = 4
+UPDATE equivalencia_productos SET producto_esquel = 5 WHERE producto_comodoro = 5
+UPDATE equivalencia_productos SET producto_esquel = 6 WHERE producto_comodoro = 6
+UPDATE equivalencia_productos SET producto_esquel = 7 WHERE producto_comodoro = 7
+UPDATE equivalencia_productos SET producto_esquel = 8 WHERE producto_comodoro = 8
+UPDATE equivalencia_productos SET producto_esquel = 9 WHERE producto_comodoro = 9
+UPDATE equivalencia_productos SET producto_esquel = 10 WHERE producto_comodoro = 10
+UPDATE equivalencia_productos SET producto_esquel = 11 WHERE producto_comodoro = 11
+UPDATE equivalencia_productos SET producto_esquel = 12 WHERE producto_comodoro = 12
+UPDATE equivalencia_productos SET producto_esquel = 13 WHERE producto_comodoro = 13
+UPDATE equivalencia_productos SET producto_esquel = 14 WHERE producto_comodoro = 14
+UPDATE equivalencia_productos SET producto_esquel = 15 WHERE producto_comodoro = 15
+UPDATE equivalencia_productos SET producto_esquel = 16 WHERE producto_comodoro = 16
+UPDATE equivalencia_productos SET producto_esquel = 17 WHERE producto_comodoro = 17
+UPDATE equivalencia_productos SET producto_esquel = 18 WHERE producto_comodoro = 18
+UPDATE equivalencia_productos SET producto_esquel = 19 WHERE producto_comodoro = 19
+UPDATE equivalencia_productos SET producto_esquel = 20 WHERE producto_comodoro = 20
+
+
 
 ------
+
 --select * from dblink('conexion_DW_comodoro', 'select codigo_cliente from clientes') as curso_alumno(codigo_cliente int)
 
 --create or replace function carga_tabla_de_equivalencia_clientes() returns void as

@@ -53,15 +53,15 @@ BEGIN
 	INSERT INTO categoria VALUES (3, 'Con Conservantes');
 
 	--Producto
-	INSERT INTO productos VALUES (1,'Papa',azar(1,3),azar(50,300));
-	INSERT INTO productos VALUES (2,'Zapallo',azar(1,3),azar(50,300));
+	INSERT INTO productos VALUES (1,'Morron',azar(1,3),azar(50,300));
+	INSERT INTO productos VALUES (2,'Damazco',azar(1,3),azar(50,300));
 	INSERT INTO productos VALUES (3,'Uvas',azar(1,3),azar(50,300));
-	INSERT INTO productos VALUES (4,'Manzana',azar(1,3),azar(50,300));
-	INSERT INTO productos VALUES (5,'Banana',azar(1,3),azar(50,300));
+	INSERT INTO productos VALUES (4,'Pera',azar(1,3),azar(50,300));
+	INSERT INTO productos VALUES (5,'Calabaza',azar(1,3),azar(50,300));
 	INSERT INTO productos VALUES (6,'Cebolla',azar(1,3),azar(50,300));
 	INSERT INTO productos VALUES (7,'Rúcula',azar(1,3),azar(50,300));
 	INSERT INTO productos VALUES (8,'Frutilla',azar(1,3),azar(50,300));
-	INSERT INTO productos VALUES (9,'Lechuga',azar(1,3),azar(50,300));
+	INSERT INTO productos VALUES (9,'Zucchini',azar(1,3),azar(50,300));
 	INSERT INTO productos VALUES (10,'Cerezas',azar(1,3),azar(50,300));
 
 	--Clientes
