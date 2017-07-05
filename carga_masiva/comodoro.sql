@@ -105,7 +105,7 @@ declare
 
 begin
 
-	for i in 51..100 loop
+	for i in 1..300 loop
 
 
 		insert into venta values((select fecha_al_azar()), i, (select trunc(random() * (10-1+1)) + 1), ('venta: ' || i), (select trunc(random() * (14-10+1)) + 10));
@@ -140,27 +140,6 @@ language 'plpgsql';
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
---(select trunc(random() * (15-1+1)) + 1)
-
---select fecha_al_azar()
-
 select carga_de_ventas()
-
---select floor(random() * (15-1+1)) + 1
-
-
---producto := (select nro_producto from producto
---			where producto.nro_producto not in (select codigo_producto
---				from detalle_de_venta where id_factura = i)
---			order by random()
---			limit 1);
-
-
-
---(select producto.nombre, producto.codigo_producto from producto
---where producto.codigo_producto in (select codigo_producto
-
---	from detalle_de_venta where id_factura = 16)
---)
 
 CREATE EXTENSION dblink;

@@ -136,7 +136,7 @@ declare
 
 begin
 
-	for i in 1..500 loop
+	for i in 1..300 loop
 
 
 		insert into venta values((select fecha_al_azar()), i, (select cliente_al_azar()), ('venta: ' || i), (select trunc(random() * (14-10+1)) + 10));

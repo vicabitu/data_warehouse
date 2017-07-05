@@ -138,7 +138,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION get_id_forma_pago(f_p varchar(20)) return int as $$
+CREATE OR REPLACE FUNCTION get_id_forma_pago(f_p varchar(20)) returns int as $$
 BEGIN
   CASE f_p
     WHEN 'crédito' THEN return 11;
@@ -310,15 +310,15 @@ CREATE TEMP TABLE tmpVentas(
 	--pass
   END;
 
-  INSERT INTO venta
-  SELECT t.id_tiempo, v.fecha, teC.cliente_unificado, v.forma_de_pago, 2, teP.producto_unificado, v.monto_vendido, v.cantidad_vendida
-  FROM tmpVentas v, equivalencia_clientes teC, equivalencia_productos teP, tiempo t
-  WHERE v.idCliente = teC.cliente_comodoro AND v.idProducto = teP.producto_comodoro AND t.mes = pMes AND t.anio = pAnio;
-
   INSERT INTO producto
   SELECT DISTINCT teP.producto_unificado, v.nombre_producto, v.categoria
   FROM tmpVentas v, equivalencia_productos teP
   WHERE v.idProducto = teP.producto_comodoro AND teP.producto_unificado not in (SELECT id_producto FROM producto);
+
+  INSERT INTO venta
+  SELECT t.id_tiempo, v.fecha, teC.cliente_unificado, v.forma_de_pago, 2, teP.producto_unificado, v.monto_vendido, v.cantidad_vendida
+  FROM tmpVentas v, equivalencia_clientes teC, equivalencia_productos teP, tiempo t
+  WHERE v.idCliente = teC.cliente_comodoro AND v.idProducto = teP.producto_comodoro AND t.mes = pMes AND t.anio = pAnio;
 
   DROP TABLE tmpVentas;
 
@@ -399,15 +399,15 @@ BEGIN
 	--pass
   END;
 
-  INSERT INTO venta
-  SELECT t.id_tiempo, v.fecha, teC.cliente_unificado, v.forma_de_pago, 3, teP.producto_unificado, v.monto_vendido, v.cantidad_vendida
-  FROM tmpVentas v, equivalencia_clientes teC, equivalencia_productos teP, tiempo t
-  WHERE v.idCliente = teC.cliente_esquel AND v.idProducto = teP.producto_esquel AND t.mes = pMes AND t.anio = pAnio;
-
   INSERT INTO producto
   SELECT DISTINCT tep.producto_unificado, v.nombre_producto, v.categoria
   FROM tmpVentas v, equivalencia_productos teP
   WHERE v.idProducto = teP.producto_esquel AND teP.producto_unificado not in (SELECT id_producto FROM producto);
+
+  INSERT INTO venta
+  SELECT t.id_tiempo, v.fecha, teC.cliente_unificado, v.forma_de_pago, 3, teP.producto_unificado, v.monto_vendido, v.cantidad_vendida
+  FROM tmpVentas v, equivalencia_clientes teC, equivalencia_productos teP, tiempo t
+  WHERE v.idCliente = teC.cliente_esquel AND v.idProducto = teP.producto_esquel AND t.mes = pMes AND t.anio = pAnio;
 
   DROP TABLE tmpVentas;
 
