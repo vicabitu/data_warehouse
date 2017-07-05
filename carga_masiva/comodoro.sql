@@ -7,81 +7,81 @@
 
 --Alta de tipos de clientes
 
-insert into tipos_cliente values(1, 'Fabrica')
+insert into tipos_cliente values(1, 'Fabrica');
 
-insert into tipos_cliente values(2, 'Pyme')
+insert into tipos_cliente values(2, 'Pyme');
 
-insert into tipos_cliente values(3, 'Cooperativa')
+insert into tipos_cliente values(3, 'Cooperativa');
 
-insert into tipos_cliente values(4, 'Supermercado')
+insert into tipos_cliente values(4, 'Supermercado');
 
 --------------------------------------------------------------------
 
 --Alta de clientes
 
-insert into clientes values(1, 'Juan Perez', 3, 'Colombia 1500')
-insert into clientes values(2, 'Romina Martinez', 1, '9 de Julio 500')
-insert into clientes values(3, 'Jorge Alvarez', 2, 'Pasaje Cordoba 50')
-insert into clientes values(4, 'Martina Rodriguez', 3, 'Mitre 1800')
-insert into clientes values(5, 'Ramiro Lopez', 2, 'Alem 353')
-insert into clientes values(6, 'Ryu Mizuki', 4, 'Colombia 2000')
-insert into clientes values(7, 'Lorena Vidal', 4, 'Ameghino 350')
-insert into clientes values(8, 'Santiago Lopez', 1, 'Tucuman 256')
-insert into clientes values(9, 'Jorge James', 2, 'Ruta 3')
-insert into clientes values(10, 'Sakura Sakurako', 4, 'Perito Moreno 856')
+insert into clientes values(1, 'Juan Perez', 3, 'Colombia 1500');
+insert into clientes values(2, 'Romina Martinez', 1, '9 de Julio 500');
+insert into clientes values(3, 'Jorge Alvarez', 2, 'Pasaje Cordoba 50');
+insert into clientes values(4, 'Martina Rodriguez', 3, 'Mitre 1800');
+insert into clientes values(5, 'Ramiro Lopez', 2, 'Alem 353');
+insert into clientes values(6, 'Ryu Mizuki', 4, 'Colombia 2000');
+insert into clientes values(7, 'Lorena Vidal', 4, 'Ameghino 350');
+insert into clientes values(8, 'Santiago Lopez', 1, 'Tucuman 256');
+insert into clientes values(9, 'Jorge James', 2, 'Ruta 3');
+insert into clientes values(10, 'Sakura Sakurako', 4, 'Perito Moreno 856');
 
-delete from clientes where codigo_cliente = 40
+delete from clientes where codigo_cliente = 40;
 
 
 ------------------------------------------------------------------------------------------------------------------------
 
-insert into categoria values(1, 10, 'frutas')
+insert into categoria values(1, 10, 'frutas');
 
-insert into categoria values(2, 20, 'hortalizas y legumbres')
+insert into categoria values(2, 20, 'hortalizas y legumbres');
 
 
-delete from categoria where codigo_categoria = 3
+delete from categoria where codigo_categoria = 3;
 
 ---------------------------------------------------------------------------------------------------------------------------
 
 --Alta de productos
 
-insert into producto values(1, 'Manzana', 1, 10, 36.5)
-insert into producto values(2, 'Banana', 1, 10, 36.5)
-insert into producto values(3, 'Frutilla', 1, 10, 50)
-insert into producto values(7, 'Limon', 1, 10, 42)
-insert into producto values(8, 'Mandarina', 1, 10, 35.75)
-insert into producto values(9, 'Naranja', 1, 10, 37.80)
-insert into producto values(10, 'Pomelo', 1, 10, 50)
-insert into producto values(11, 'Durazno', 1, 12, 70)
-insert into producto values(12, 'Ciruela', 1, 12, 40)
-insert into producto values(4, 'Berenjena', 2, 20, 45.5)
-insert into producto values(5, 'Espinaca', 2, 20, 38)
-insert into producto values(6, 'Choclo', 2, 20, 46)
-insert into producto values(13, 'Zapallito', 2, 21, 38.25)
-insert into producto values(14, 'Zapallo', 2, 21, 30)
-insert into producto values(15, 'Tomate', 2, 21, 55)
-insert into producto values(16, 'Lechuga', 2, 22, 22)
-insert into producto values(17, 'zanahoria', 2, 23, 15)
-insert into producto values(18, 'Papa', 2, 24, 21.50)
-insert into producto values(19, 'Pepino', 2, 21, 42)
-insert into producto values(20, 'Pimientos', 2, 22, 34)
+insert into producto values(1, 'Manzana', 1, 10, 36.5);
+insert into producto values(2, 'Banana', 1, 10, 36.5);
+insert into producto values(3, 'Frutilla', 1, 10, 50);
+insert into producto values(7, 'Limon', 1, 10, 42);
+insert into producto values(8, 'Mandarina', 1, 10, 35.75);
+insert into producto values(9, 'Naranja', 1, 10, 37.80);
+insert into producto values(10, 'Pomelo', 1, 10, 50);
+insert into producto values(11, 'Durazno', 1, 12, 70);
+insert into producto values(12, 'Ciruela', 1, 12, 40);
+insert into producto values(4, 'Berenjena', 2, 20, 45.5);
+insert into producto values(5, 'Espinaca', 2, 20, 38);
+insert into producto values(6, 'Choclo', 2, 20, 46);
+insert into producto values(13, 'Zapallito', 2, 21, 38.25);
+insert into producto values(14, 'Zapallo', 2, 21, 30);
+insert into producto values(15, 'Tomate', 2, 21, 55);
+insert into producto values(16, 'Lechuga', 2, 22, 22);
+insert into producto values(17, 'zanahoria', 2, 23, 15);
+insert into producto values(18, 'Papa', 2, 24, 21.50);
+insert into producto values(19, 'Pepino', 2, 21, 42);
+insert into producto values(20, 'Pimientos', 2, 22, 34);
 
-select * from producto
+select * from producto;
 
 ---------------------------------------------------------------------------------------------------------------------------
 
-insert into medio_de_pago values(10, 'Efectivo', 1, 1, 'Compra')
+insert into medio_de_pago values(10, 'Efectivo', 1, 1, 'Compra');
 
-insert into medio_de_pago values(11, 'Tarjeta de credito', 2, 2, 'Compra con tarjeta')
+insert into medio_de_pago values(11, 'Tarjeta de credito', 2, 2, 'Compra con tarjeta');
 
-insert into medio_de_pago values(12, 'Cuenta corriente', 3, 3, 'Compra con cuenta')
+insert into medio_de_pago values(12, 'Cuenta corriente', 3, 3, 'Compra con cuenta');
 
-insert into medio_de_pago values(13, 'Tarjeta de debito', 4, 4, 'Compra con tarjeta de debito')
+insert into medio_de_pago values(13, 'Tarjeta de debito', 4, 4, 'Compra con tarjeta de debito');
 
-insert into medio_de_pago values(14, 'Cheque', 5, 5, 'Compra con cheque')
+insert into medio_de_pago values(14, 'Cheque', 5, 5, 'Compra con cheque');
 
-select * from medio_de_pago
+select * from medio_de_pago;
 ----------------------------------------------------------------------------------------------------------------------------
 
 create or replace function fecha_al_azar() returns date as $$
@@ -136,32 +136,31 @@ begin
 
 	return;
 end $body$
-language 'plpgsql'
+language 'plpgsql';
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-(select trunc(random() * (15-1+1)) + 1)
+--(select trunc(random() * (15-1+1)) + 1)
 
-select fecha_al_azar()
+--select fecha_al_azar()
 
 select carga_de_ventas()
 
-select floor(random() * (15-1+1)) + 1
+--select floor(random() * (15-1+1)) + 1
 
 
-producto := (select nro_producto from producto
-			where producto.nro_producto not in (select codigo_producto
-				from detalle_de_venta where id_factura = i)
-			order by random()
-			limit 1);
+--producto := (select nro_producto from producto
+--			where producto.nro_producto not in (select codigo_producto
+--				from detalle_de_venta where id_factura = i)
+--			order by random()
+--			limit 1);
 
 
 
-(select producto.nombre, producto.codigo_producto from producto
-where producto.codigo_producto in (select codigo_producto
+--(select producto.nombre, producto.codigo_producto from producto
+--where producto.codigo_producto in (select codigo_producto
 
-	from detalle_de_venta where id_factura = 16)
-)
-
+--	from detalle_de_venta where id_factura = 16)
+--)
 
 CREATE EXTENSION dblink;

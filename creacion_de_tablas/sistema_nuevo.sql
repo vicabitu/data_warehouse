@@ -90,7 +90,7 @@ create table detalle_de_venta (
 	id_factura integer,
 	codigo_producto integer,
 	descripcion varchar(50),
-	unidad varchar(10),
+	unidad integer,
 	precio real
 
 );

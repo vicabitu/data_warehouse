@@ -100,6 +100,27 @@ begin
 end
 $$ language plpgsql;
 
+----------------------------------------------------------------------------------------------------------------------------
+
+create or replace function cliente_al_azar() returns integer as $$
+declare
+	aux_random integer;
+begin
+  aux_random := (select trunc(random() * (10-1+1)) + 1);
+  CASE aux_random
+    WHEN 1 THEN return 1;
+    WHEN 2 THEN return 2;
+    WHEN 3 THEN return 20;
+    WHEN 4 THEN return 4;
+    WHEN 5 THEN return 23;
+    WHEN 6 THEN return 6;
+    WHEN 7 THEN return 35;
+    WHEN 8 THEN return 8;
+    WHEN 9 THEN return 30;
+    WHEN 10 THEN return 10;
+  END CASE;
+end
+$$ language plpgsql;
 
 ---------------------------------------------------------------------------------------------------------------------------------
 
@@ -118,7 +139,7 @@ begin
 	for i in 1..500 loop
 
 
-		insert into venta values((select fecha_al_azar()), i, (select trunc(random() * (10-1+1)) + 1), ('venta: ' || i), (select trunc(random() * (14-10+1)) + 10));
+		insert into venta values((select fecha_al_azar()), i, (select cliente_al_azar()), ('venta: ' || i), (select trunc(random() * (14-10+1)) + 10));
 
 
 		for j in 1..15 loop
@@ -148,5 +169,6 @@ begin
 end $body$
 language 'plpgsql';
 
+SELECT carga_de_ventas();
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 CREATE EXTENSION dblink;
