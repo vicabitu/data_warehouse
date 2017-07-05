@@ -414,4 +414,10 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+--select dblink_connect('conexion_DW_comodoro', 'dbname=comodoro');
+--select dblink_connect('conexion_DW_esquel', 'dbname=esquel');
+--select dblink_connect('conexion_DW_trelew', 'dbname=trelew');
+
+--SELECT carga_datawarehouse_trelew(12,2013);
+--SELECT carga_datawarehouse_comodoro(12,2013);
 --SELECT carga_datawarehouse_esquel(12,2013);
