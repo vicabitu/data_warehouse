@@ -32,7 +32,7 @@ create table clientes(
 
 	id_cliente integer,
 	nombre varchar(30),
-	id_tipo_cliente integer,
+	id_tipo_cliente integer
 
 )
 

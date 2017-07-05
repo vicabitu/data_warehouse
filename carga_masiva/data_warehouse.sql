@@ -121,49 +121,6 @@ UPDATE equivalencia_productos SET producto_esquel = 20 WHERE producto_comodoro =
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 
-
---select * from dblink('conexion_DW_comodoro', 'select codigo_cliente from clientes') as curso_alumno(codigo_cliente int)
-
---create or replace function carga_tabla_de_equivalencia_clientes() returns void as
---$body$
-
---begin
-
---		insert into equivalencia_clientes
---			(cliente_trelew),
---			(select codigo_cliente
---			from dblink ('conexion_DW_comodoro', 'select codigo_cliente from clientes') as
---				cliente(codigo_cliente int)),
---			(cliente_esquel)
-
---	return;
---end $body$
---language 'plpgsql'
-
---INSERT INTO teClientes (CSN)
---	SELECT nro_cliente
---	FROM dblink (myconn, ‘SELECT nro_cliente FROM Clientes’) as
---                          consulta(nro_cliente integer)
-
------------
-
---CREATE TABLE tmpVentas(
---    fecha date,
---    idFactura int,
---    idCliente int,
---    idProducto int,
---    idSucursal int,
---    medio_de_pago int,
---    monto real,
---    cantidad_vendida int,
---    nombre_producto_vendido int,
---    categoria int,
---    subcategoria int,
---    precio real,
---    nombre_cliente int,
---    tipo_cliente int
---)
-
 CREATE OR REPLACE FUNCTION sacar_trimestre(mes int) returns int as $$
 BEGIN
   CASE mes
@@ -184,67 +141,70 @@ END;
 $$ LANGUAGE plpgsql;
 
 
-
-CREATE OR REPLACE FUNCTION carga_datawarehouse_trelew(pMes int, pAnio int) returns void as
-$body$
+CREATE OR REPLACE FUNCTION carga_datawarehouse_trelew(pMes int, pAnio int) returns void as $$
 
 BEGIN
 
-  CREATE TEMP TABLE tmpVentas AS 
-  SELECT *
-  FROM DBLINK ('conexion_DW_trelew',
-    'SELECT
-    v.fecha_vta as fecha,
-    v.nro_factura as idFactura,
-    v.nro_cliente as idCliente,
-    dv.nro_producto as idProducto,
-    '+ 0 +' as Sucursal,
-    v.forma_pago as forma_de_pago,
-    dv.unidad * dv.precio as monto_vendido,
-    dv.unidad as cantidad_vendida,
-    p.nombre as nombre_producto,
-    p.nro_categoria as categoria,
-    '+ 0 + ' as subcategoria,
-    dv.precio as precio_producto,
-    c.nombre as nombre_cliente,
-    c.tipo as tipo_cliente,
-    c.direccion as direccion
+	create temp table tmpVentas(
 
-    FROM ventas v, detalle_venta dv, clientes c, producto p
+		fecha_venta date,
+		id_cliente integer,
+		id_medio_de_pago integer,
+		id_sucursal integer,
+		id_producto integer,
+		monto_vendido real,
+		cantidad_vendida integer,
+		nombre_cliente varchar(30),
+		id_tipo_cliente integer,
+		nombre_producto varchar(30),
+		id_categoria_producto integer
 
-    WHERE v.idFactura = dv.idFactura and
-          AND cat.nro_categoria = p.nro_categoria
-          AND v.nro_cliente = c.nro_cliente
-          AND dv.nro_producto = p.nro_producto
-          AND select date_part (''month'', date v.fecha) =  '+pMes+'
-          AND select date_part (''year'', date v.fecha) = '+pAnio+''
-  );
+	);
 
-  INSERT INTO clientes
-  SELECT DISTINCT teC.cliente_unificado, v.nombre_cliente, v.tipo_cliente, v.direccion
-  FROM tmpVentas v, equivalencia_clientes teC
-  WHERE v.idCliente = teC.cliente_trelew AND teC.cliente_unificado not in (SELECT id_cliente from clientes);
+	insert into tmpVentas
+	select *
+	from dblink('conexion_DW_trelew',
+		'select v.fecha_vta, v.nro_cliente, 1, 1, dv.nro_producto,
+			dv.precio * dv.unidad, dv.unidad, c.nombre, c.tipo, p.nombre, p.nro_categoria
+			from venta v, detalle_venta dv, productos p, clientes c
+			where v.nro_factura = dv.nro_factura and
+				v.nro_cliente = c.nro_cliente and
+				dv.nro_producto = p.nro_producto and
+				(select date_part(''month'', fecha_vta)) = '|| pMes ||' and 
+				(select date_part(''year'', fecha_vta)) = '|| pAnio ||';')
 
-  IF NOT EXISTS(SELECT * FROM tiempo WHERE mes = pMes AND anio = pAnio) THEN
-  
-      INSERT INTO tiempo VALUES (pMes, pAnio, sacar_trimestre(pMes));
+			as tablaTemp(fecha_vta date, id_cliente integer, id_medio_de_pago integer,
+				id_sucursal integer, id_producto integer, monto_vendido real,
+				cantidad_vendida integer, nombre_cliente varchar(30), id_tipo_cliente integer,
+				nombre_producto varchar(30), id_categoria_producto integer);
 
-  END IF;
+	INSERT INTO clientes
+	SELECT DISTINCT teC.cliente_unificado, v.nombre_cliente, v.id_tipo_cliente
+	FROM tmpVentas v, equivalencia_clientes teC
+	WHERE v.id_cliente = teC.cliente_trelew AND teC.cliente_unificado not in (SELECT id_cliente from clientes);
 
-  INSERT INTO venta
-  SELECT t.id_tiempo, v.fecha, teC.cliente_unificado, v.forma_de_pago, v.sucursal, teProductos.producto_unificado, v.monto_vendido, v.cantidad_vendida
-  FROM tmpVentas v, equivalencia_clientes teC, equivalencia_productos teP, tiempo t
-  WHERE v.idCliente = equivalencia_clientes.cliente_trelew AND v.idProducto = equivalencia_productos.producto_trelew AND t.mes = pMes AND t.anio = pAnio;
+	IF NOT EXISTS(SELECT * FROM tiempo WHERE mes = pMes AND anio = pAnio) THEN
 
-  INSERT INTO producto
-  SELECT DISTINCT tep.producto_unificado, v.nombre_producto, v.categoria
-  FROM tmpVentas v, equivalencia_productos teP
-  WHERE v.idProducto = teP.producto_trelew AND teP.producto_unificado not in (SELECT id_producto FROM producto);
+	  INSERT INTO tiempo VALUES (pMes, pAnio, sacar_trimestre(pMes));
 
-END $body$
-LANGUAGE 'plpgsql';
+	END IF;
 
-select carga_datawarehouse_trelew(1, 2013)
+	INSERT INTO venta
+	SELECT DISTINCT t.id_tiempo, teC.cliente_unificado, v.id_medio_de_pago, v.id_sucursal, teP.producto_unificado, v.monto_vendido, v.cantidad_vendida, v.fecha_venta
+	FROM tmpVentas v, equivalencia_clientes teC, equivalencia_productos teP, tiempo t
+	WHERE v.id_cliente = teC.cliente_trelew AND v.id_producto = teP.producto_trelew AND t.mes = pMes AND t.anio = pAnio;
+
+	INSERT INTO producto
+	SELECT DISTINCT tep.producto_unificado, v.nombre_producto, v.id_categoria_producto
+	FROM tmpVentas v, equivalencia_productos teP
+	WHERE v.id_producto = teP.producto_trelew AND teP.producto_unificado not in (SELECT id_producto FROM producto);
+
+END;
+$$ LANGUAGE plpgsql;
+
+drop table tmpVentas
+
+select carga_datawarehouse_trelew(08, 2011)
 
 select date_part('month', date '2013-05-30')
 
