@@ -1,5 +1,3 @@
-﻿
-/*Carga inicial del data warehouse*/
 
 
 insert into region values (1, 'Patagonia');
@@ -48,18 +46,18 @@ select dblink_connect('conexion_DW_trelew', 'dbname=trelew');
 /*Carga tabla de equivalencia de clientes*/
 
 INSERT INTO equivalencia_clientes (cliente_comodoro)
-SELECT  nro_cliente
+SELECT  codigo_cliente
 FROM dblink ('conexion_DW_comodoro','
-SELECT nro_cliente
+SELECT codigo_cliente
 FROM clientes'
-) as consulta(nro_cliente int)
+) as consulta(codigo_cliente int);
 
 INSERT INTO equivalencia_clientes (cliente_esquel)
-SELECT  nro_cliente
+SELECT  codigo_cliente
 FROM dblink ('conexion_DW_esquel','
-SELECT nro_cliente
+SELECT codigo_cliente
 FROM clientes'
-) as consulta(nro_cliente int)
+) as consulta(codigo_cliente int);
 
 INSERT INTO equivalencia_clientes (cliente_trelew)
 SELECT  nro_cliente
@@ -68,16 +66,16 @@ SELECT nro_cliente
 FROM clientes'
 ) as consulta(nro_cliente int);
 
-DELETE FROM equivalencia_clientes WHERE cliente_esquel = 2
-UPDATE equivalencia_clientes SET cliente_esquel = 2 WHERE cliente_comodoro = 1
-DELETE FROM equivalencia_clientes WHERE cliente_esquel = 4
-UPDATE equivalencia_clientes SET cliente_esquel = 4 WHERE cliente_comodoro = 4
-DELETE FROM equivalencia_clientes WHERE cliente_esquel = 23
-UPDATE equivalencia_clientes SET cliente_esquel = 23 WHERE cliente_trelew = 2
-DELETE FROM equivalencia_clientes WHERE cliente_esquel = 30
-UPDATE equivalencia_clientes SET cliente_esquel = 30 WHERE cliente_comodoro = 9
-DELETE FROM equivalencia_clientes WHERE cliente_esquel = 35
-UPDATE equivalencia_clientes SET cliente_esquel = 35 WHERE cliente_comodoro = 7
+DELETE FROM equivalencia_clientes WHERE cliente_esquel = 2;
+UPDATE equivalencia_clientes SET cliente_esquel = 2 WHERE cliente_comodoro = 1;
+DELETE FROM equivalencia_clientes WHERE cliente_esquel = 4;
+UPDATE equivalencia_clientes SET cliente_esquel = 4 WHERE cliente_comodoro = 4;
+DELETE FROM equivalencia_clientes WHERE cliente_esquel = 23;
+UPDATE equivalencia_clientes SET cliente_esquel = 23 WHERE cliente_trelew = 2;
+DELETE FROM equivalencia_clientes WHERE cliente_esquel = 30;
+UPDATE equivalencia_clientes SET cliente_esquel = 30 WHERE cliente_comodoro = 9;
+DELETE FROM equivalencia_clientes WHERE cliente_esquel = 35;
+UPDATE equivalencia_clientes SET cliente_esquel = 35 WHERE cliente_comodoro = 7;
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -88,35 +86,35 @@ SELECT  nro_producto
 FROM dblink ('conexion_DW_trelew','
 SELECT nro_producto
 FROM productos'
-) as consulta(nro_producto int)
+) as consulta(nro_producto int);
 
 INSERT INTO equivalencia_productos (producto_comodoro)
 SELECT  codigo_producto
 FROM dblink ('conexion_DW_comodoro','
 SELECT codigo_producto
-FROM productos'
-) as consulta(codigo_producto int)
+FROM producto'
+) as consulta(codigo_producto int);
 
-UPDATE equivalencia_productos SET producto_esquel = 1 WHERE producto_comodoro = 1
-UPDATE equivalencia_productos SET producto_esquel = 2 WHERE producto_comodoro = 2
-UPDATE equivalencia_productos SET producto_esquel = 3 WHERE producto_comodoro = 3
-UPDATE equivalencia_productos SET producto_esquel = 4 WHERE producto_comodoro = 4
-UPDATE equivalencia_productos SET producto_esquel = 5 WHERE producto_comodoro = 5
-UPDATE equivalencia_productos SET producto_esquel = 6 WHERE producto_comodoro = 6
-UPDATE equivalencia_productos SET producto_esquel = 7 WHERE producto_comodoro = 7
-UPDATE equivalencia_productos SET producto_esquel = 8 WHERE producto_comodoro = 8
-UPDATE equivalencia_productos SET producto_esquel = 9 WHERE producto_comodoro = 9
-UPDATE equivalencia_productos SET producto_esquel = 10 WHERE producto_comodoro = 10
-UPDATE equivalencia_productos SET producto_esquel = 11 WHERE producto_comodoro = 11
-UPDATE equivalencia_productos SET producto_esquel = 12 WHERE producto_comodoro = 12
-UPDATE equivalencia_productos SET producto_esquel = 13 WHERE producto_comodoro = 13
-UPDATE equivalencia_productos SET producto_esquel = 14 WHERE producto_comodoro = 14
-UPDATE equivalencia_productos SET producto_esquel = 15 WHERE producto_comodoro = 15
-UPDATE equivalencia_productos SET producto_esquel = 16 WHERE producto_comodoro = 16
-UPDATE equivalencia_productos SET producto_esquel = 17 WHERE producto_comodoro = 17
-UPDATE equivalencia_productos SET producto_esquel = 18 WHERE producto_comodoro = 18
-UPDATE equivalencia_productos SET producto_esquel = 19 WHERE producto_comodoro = 19
-UPDATE equivalencia_productos SET producto_esquel = 20 WHERE producto_comodoro = 20
+UPDATE equivalencia_productos SET producto_esquel = 1 WHERE producto_comodoro = 1;
+UPDATE equivalencia_productos SET producto_esquel = 2 WHERE producto_comodoro = 2;
+UPDATE equivalencia_productos SET producto_esquel = 3 WHERE producto_comodoro = 3;
+UPDATE equivalencia_productos SET producto_esquel = 4 WHERE producto_comodoro = 4;
+UPDATE equivalencia_productos SET producto_esquel = 5 WHERE producto_comodoro = 5;
+UPDATE equivalencia_productos SET producto_esquel = 6 WHERE producto_comodoro = 6;
+UPDATE equivalencia_productos SET producto_esquel = 7 WHERE producto_comodoro = 7;
+UPDATE equivalencia_productos SET producto_esquel = 8 WHERE producto_comodoro = 8;
+UPDATE equivalencia_productos SET producto_esquel = 9 WHERE producto_comodoro = 9;
+UPDATE equivalencia_productos SET producto_esquel = 10 WHERE producto_comodoro = 10;
+UPDATE equivalencia_productos SET producto_esquel = 11 WHERE producto_comodoro = 11;
+UPDATE equivalencia_productos SET producto_esquel = 12 WHERE producto_comodoro = 12;
+UPDATE equivalencia_productos SET producto_esquel = 13 WHERE producto_comodoro = 13;
+UPDATE equivalencia_productos SET producto_esquel = 14 WHERE producto_comodoro = 14;
+UPDATE equivalencia_productos SET producto_esquel = 15 WHERE producto_comodoro = 15;
+UPDATE equivalencia_productos SET producto_esquel = 16 WHERE producto_comodoro = 16;
+UPDATE equivalencia_productos SET producto_esquel = 17 WHERE producto_comodoro = 17;
+UPDATE equivalencia_productos SET producto_esquel = 18 WHERE producto_comodoro = 18;
+UPDATE equivalencia_productos SET producto_esquel = 19 WHERE producto_comodoro = 19;
+UPDATE equivalencia_productos SET producto_esquel = 20 WHERE producto_comodoro = 20;
 
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
@@ -185,12 +183,11 @@ $$ LANGUAGE plpgsql;
 
 
 
-CREATE OR REPLACE FUNCTION carga_datawarehouse_trelew(pMes int, pAnio int) returns void as
-$body$
+CREATE OR REPLACE FUNCTION carga_datawarehouse_trelew(pMes int, pAnio int) returns void AS $$
 
 BEGIN
 
-  CREATE TEMP TABLE tmpVentas AS 
+  CREATE TEMP TABLE tmpVentas AS
   SELECT *
   FROM DBLINK ('conexion_DW_trelew',
     'SELECT
@@ -198,13 +195,11 @@ BEGIN
     v.nro_factura as idFactura,
     v.nro_cliente as idCliente,
     dv.nro_producto as idProducto,
-    '+ 0 +' as Sucursal,
     v.forma_pago as forma_de_pago,
     dv.unidad * dv.precio as monto_vendido,
     dv.unidad as cantidad_vendida,
     p.nombre as nombre_producto,
     p.nro_categoria as categoria,
-    '+ 0 + ' as subcategoria,
     dv.precio as precio_producto,
     c.nombre as nombre_cliente,
     c.tipo as tipo_cliente,
@@ -226,13 +221,13 @@ BEGIN
   WHERE v.idCliente = teC.cliente_trelew AND teC.cliente_unificado not in (SELECT id_cliente from clientes);
 
   IF NOT EXISTS(SELECT * FROM tiempo WHERE mes = pMes AND anio = pAnio) THEN
-  
+
       INSERT INTO tiempo VALUES (pMes, pAnio, sacar_trimestre(pMes));
 
   END IF;
 
   INSERT INTO venta
-  SELECT t.id_tiempo, v.fecha, teC.cliente_unificado, v.forma_de_pago, v.sucursal, teProductos.producto_unificado, v.monto_vendido, v.cantidad_vendida
+  SELECT t.id_tiempo, v.fecha, teC.cliente_unificado, v.forma_de_pago, 1, teProductos.producto_unificado, v.monto_vendido, v.cantidad_vendida
   FROM tmpVentas v, equivalencia_clientes teC, equivalencia_productos teP, tiempo t
   WHERE v.idCliente = equivalencia_clientes.cliente_trelew AND v.idProducto = equivalencia_productos.producto_trelew AND t.mes = pMes AND t.anio = pAnio;
 
@@ -241,12 +236,10 @@ BEGIN
   FROM tmpVentas v, equivalencia_productos teP
   WHERE v.idProducto = teP.producto_trelew AND teP.producto_unificado not in (SELECT id_producto FROM producto);
 
-END $body$
-LANGUAGE 'plpgsql';
+END
+$$ LANGUAGE 'plpgsql';
 
-select carga_datawarehouse_trelew(1, 2013)
-
-select date_part('month', date '2013-05-30')
+select date_part('month', date '2013-05-30');
 
 
 CREATE OR REPLACE FUNCTION carga_datawarehouse_comodoro(pMes int, pAnio int) returns void as $$
@@ -254,15 +247,14 @@ DECLARE
 
 BEGIN
 
+  CREATE TEMP TABLE tmpVentas AS
   SELECT *
-  INTO tmpVentas
   FROM DBLINK ('conexion_DW_comodoro',
     'SELECT
     v.fecha_venta as fecha,
     v.id_factura as idFactura,
     v.codigo_cliente as idCliente,
     dv.codigo_producto as idProducto,
-    ' + 1 + ' as Sucursal,
     v.codigo_medio_de_pago as forma_de_pago,
     dv.unidad * dv.precio as monto_vendido,
     dv.unidad as cantidad_vendida,
@@ -289,22 +281,21 @@ BEGIN
   INSERT INTO clientes
   SELECT DISTINCT teC.cliente_unificado, v.nombre_cliente, v.tipo_cliente, v.direccion
   FROM tmpVentas v, equivalencia_clientes teC
-  WHERE v.idCliente = teC.cliente_comodoro AND teC.cliente_unificado not in (SELECT id_cliente from clientes)
+  WHERE v.idCliente = teC.cliente_comodoro AND teC.cliente_unificado not in (SELECT id_cliente from clientes);
 
-  IF NOT EXISTS(SELECT * FROM tiempo WHERE mes = pMes AND anio = pAnio)
-  BEGIN
-      INSERT INTO tiempo VALUES (pMes, pAnio, sacar_trimestre(pMes))
-  END
+  IF NOT EXISTS(SELECT * FROM tiempo WHERE mes = pMes AND anio = pAnio) THEN
+      INSERT INTO tiempo VALUES (pMes, pAnio, sacar_trimestre(pMes));
+  END IF;
 
   INSERT INTO venta
-  SELECT t.id_tiempo, v.fecha, teC.cliente_unificado, v.forma_de_pago, v.sucursal, teProductos.producto_unificado, v.monto_vendido, v.cantidad_vendida
+  SELECT t.id_tiempo, v.fecha, teC.cliente_unificado, v.forma_de_pago, 2, teProductos.producto_unificado, v.monto_vendido, v.cantidad_vendida
   FROM tmpVentas v, equivalencia_clientes teC, equivalencia_productos teP, tiempo t
-  WHERE v.idCliente = equivalencia_clientes.cliente_comodoro AND v.idProducto = equivalencia_productos.producto_comodoro AND t.mes = pMes AND t.anio = pAnio
+  WHERE v.idCliente = equivalencia_clientes.cliente_comodoro AND v.idProducto = equivalencia_productos.producto_comodoro AND t.mes = pMes AND t.anio = pAnio;
 
   INSERT INTO producto
   SELECT DISTINCT tep.producto_unificado, v.nombre_producto, v.categoria
   FROM tmpVentas v, equivalencia_productos teP
-  WHERE v.idProducto = teP.producto_comodoro AND teP.producto_unificado not in (SELECT id_producto FROM producto)
+  WHERE v.idProducto = teP.producto_comodoro AND teP.producto_unificado not in (SELECT id_producto FROM producto);
 
   DROP TABLE tmpVentas;
 
@@ -316,15 +307,14 @@ DECLARE
 
 BEGIN
 
+  CREATE TEMP TABLE tmpVentas AS
   SELECT *
-  INTO tmpVentas
-  FROM DBLINK (conexion_DW_esquel,
+  FROM DBLINK ('conexion_DW_esquel',
     'SELECT
     v.fecha_venta as fecha,
     v.id_factura as idFactura,
     v.codigo_cliente as idCliente,
-    dv.codigo_producto as idProducto, '
-    + 2 +'as Sucursal,
+    dv.codigo_producto as idProducto,
     v.codigo_medio_de_pago as forma_de_pago,
     dv.unidad * dv.precio as monto_vendido,
     dv.unidad as cantidad_vendida,
@@ -351,24 +341,26 @@ BEGIN
   INSERT INTO clientes
   SELECT DISTINCT teC.cliente_unificado, v.nombre_cliente, v.tipo_cliente, v.direccion
   FROM tmpVentas v, equivalencia_clientes teC
-  WHERE v.idCliente = teC.cliente_esquel AND teC.cliente_unificado not in (SELECT id_cliente from clientes)
+  WHERE v.idCliente = teC.cliente_esquel AND teC.cliente_unificado not in (SELECT id_cliente from clientes);
 
-  IF NOT EXISTS(SELECT * FROM tiempo WHERE mes = pMes AND anio = pAnio)
-  BEGIN
-      INSERT INTO tiempo VALUES (pMes, pAnio, sacar_trimestre(pMes))
-  END
+  IF NOT EXISTS(SELECT * FROM tiempo WHERE mes = pMes AND anio = pAnio) THEN
+      INSERT INTO tiempo VALUES (pMes, pAnio, sacar_trimestre(pMes));
+  END IF;
 
   INSERT INTO venta
-  SELECT t.id_tiempo, v.fecha, teC.cliente_unificado, v.forma_de_pago, v.sucursal, teProductos.producto_unificado, v.monto_vendido, v.cantidad_vendida
+  SELECT t.id_tiempo, v.fecha, teC.cliente_unificado, v.forma_de_pago, 3, teProductos.producto_unificado, v.monto_vendido, v.cantidad_vendida
   FROM tmpVentas v, equivalencia_clientes teC, equivalencia_productos teP, tiempo t
-  WHERE v.idCliente = equivalencia_clientes.cliente_esquel AND v.idProducto = equivalencia_productos.producto_esquel AND t.mes = pMes AND t.anio = pAnio
+  WHERE v.idCliente = equivalencia_clientes.cliente_esquel AND v.idProducto = equivalencia_productos.producto_esquel AND t.mes = pMes AND t.anio = pAnio;
 
   INSERT INTO producto
   SELECT DISTINCT tep.producto_unificado, v.nombre_producto, v.categoria
   FROM tmpVentas v, equivalencia_productos teP
-  WHERE v.idProducto = teP.producto_esquel AND teP.producto_unificado not in (SELECT id_producto FROM producto)
+  WHERE v.idProducto = teP.producto_esquel AND teP.producto_unificado not in (SELECT id_producto FROM producto);
 
   DROP TABLE tmpVentas;
 
 END;
 $$ LANGUAGE plpgsql;
+
+
+--select carga_datawarehouse_trelew(12, 2013);
