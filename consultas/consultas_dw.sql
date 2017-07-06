@@ -13,8 +13,36 @@ ORDER BY t.anio, t.mes, p.nombre, c.nombre, ci.descripcion, mp.descripcion;
 ----------------------------------
 ---------- consulta 2-------------
 
+--De cada cliente se desea conocer cuales son los que generan mayores ingresos a la cooperativa.
+
+select c.id_cliente, c.nombre, sum(v.monto_vendido) as ingresos_totales, rank() over(order by sum(v.monto_vendido) desc) as ranking_ventas
+from venta v, clientes c
+where v.id_cliente = c.id_cliente
+group by c.id_cliente
+order by ranking_ventas
+
+
 ----------------------------------
 ---------- consulta 3-------------
+
+--Es necesario conocer también de que manera influye, en las ventas de productos, la zona geográfica en la que están ubicados los locales.
+
+select s.id_sucursal, s.direccion, p.nombre as producto, sum(v.cantidad_vendida) as cantidad_vendida, rank() over(order by s.id_sucursal, sum(v.cantidad_vendida) desc) as ranking
+from sucursal s, venta v,producto p
+where v.id_sucursal = s.id_sucursal and p.id_producto = v.id_producto
+group by s.id_sucursal, p.id_producto --, v.cantidad_vendida, p.nombre
+order by ranking
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+--Las sucursales que mas vendieron en plata
+
+select s.id_sucursal, s.direccion as producto, sum(v.monto_vendido) as cantidad_vendida, rank() over(order by s.id_sucursal, sum(v.monto_vendido) desc) as ranking
+from sucursal s, venta v,producto p
+where v.id_sucursal = s.id_sucursal and p.id_producto = v.id_producto
+group by s.id_sucursal --, p.id_producto --, v.cantidad_vendida, p.nombre
+order by ranking
+
 
 ----------------------------------
 ---------- consulta 4-------------
