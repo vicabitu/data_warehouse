@@ -3,9 +3,6 @@
 
 /*Creacion de tablas*/
 
-
-/*Tabla de hechos*/
-
 ---------------------------------------------------------------------------------------------------------------------------------
 
 create table tipo_cliente(
@@ -147,7 +144,6 @@ alter table sucursal add constraint pk_sucursal primary key (id_sucursal);
 alter table sucursal add constraint fk_id_ciudad foreign key (id_ciudad) references ciudad (id_ciudad);
 
 
----------------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------------------
 
 create table equivalencia_clientes(

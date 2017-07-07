@@ -1,6 +1,8 @@
 --Sitema Viejo
 
 -- Funcion para número entero al azar
+-- Recibe dos parametros enteros desde y hasta, que indican el rango entre
+-- el cual se va a obtener un numero al azar, retorna un entero
 CREATE OR REPLACE FUNCTION azar(desde integer, hasta integer) RETURNS integer AS $$
 BEGIN
 	RETURN (SELECT trunc(random() * (hasta) + desde));
@@ -10,6 +12,7 @@ $$ LANGUAGE plpgsql;
 --SELECT azar(1,100);
 
 --Funcion para fecha al azar (año-mes-día)
+--Retorna una fecha (tipo date) al azar entre 2009 y 2017
 CREATE OR REPLACE FUNCTION fechaAzar() RETURNS date as $$
 BEGIN
 	RETURN (SELECT date(now() - trunc(random()  * 2900) * '1 day'::interval));
@@ -19,6 +22,7 @@ $$ LANGUAGE plpgsql;
 --SELECT fechaAzar();
 
 --Funcion para forma de pago al azar
+-- Retorna de forma aleatoria alguna de las tres formas de pago distintas
 CREATE OR REPLACE FUNCTION formaPagoAzar() RETURNS varchar(20) AS $$
 DECLARE
 	nroFormaPago integer;
@@ -37,7 +41,8 @@ $$ LANGUAGE plpgsql;
 --Se ejecuta
 --SELECT formaPagoAzar();
 
--- Funcion de carga
+-- Funcion de carga masiva para la sucursal, se dan de alta los
+-- datos para todas las tablas del sistema
 CREATE OR REPLACE FUNCTION cargaSistemaViejo() RETURNS integer AS $$
 DECLARE
 	x integer;

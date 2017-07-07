@@ -39,6 +39,8 @@ insert into tipo_cliente values(4, 'Supermercado');
 
 CREATE EXTENSION dblink;
 
+--Conexiones a las bases de datos operacionales
+
 select dblink_connect('conexion_DW_comodoro', 'dbname=comodoro');
 select dblink_connect('conexion_DW_esquel', 'dbname=esquel');
 select dblink_connect('conexion_DW_trelew', 'dbname=trelew');
@@ -66,6 +68,8 @@ SELECT nro_cliente
 FROM clientes'
 ) as consulta(nro_cliente int);
 
+
+--Modificaciones necesarias a la tabla de quivalencia para que se unifiquen los id
 DELETE FROM equivalencia_clientes WHERE cliente_esquel = 2;
 UPDATE equivalencia_clientes SET cliente_esquel = 2 WHERE cliente_comodoro = 1;
 DELETE FROM equivalencia_clientes WHERE cliente_esquel = 4;
@@ -95,6 +99,7 @@ SELECT codigo_producto
 FROM producto'
 ) as consulta(codigo_producto int);
 
+--Modificaciones necesarias a la tabla de quivalencia para que se unifiquen los id
 UPDATE equivalencia_productos SET producto_esquel = 1 WHERE producto_comodoro = 1;
 UPDATE equivalencia_productos SET producto_esquel = 2 WHERE producto_comodoro = 2;
 UPDATE equivalencia_productos SET producto_esquel = 3 WHERE producto_comodoro = 3;
@@ -119,6 +124,8 @@ UPDATE equivalencia_productos SET producto_esquel = 20 WHERE producto_comodoro =
 
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 
+--Funcion que retorna el numero de trimestre segun el numero de mes que
+--recibe como parametro
 CREATE OR REPLACE FUNCTION sacar_trimestre(mes int) returns int as $$
 BEGIN
   CASE mes
@@ -138,6 +145,8 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+
+--Funcion que retorna el id de pago segun la cadena de forma de pago que reciba
 CREATE OR REPLACE FUNCTION get_id_forma_pago(f_p varchar(20)) returns int as $$
 BEGIN
   CASE f_p
@@ -152,6 +161,7 @@ $$ LANGUAGE plpgsql;
 --
 --
 --
+--Script ETL para la sucursal de Trelew
 CREATE OR REPLACE FUNCTION carga_datawarehouse_trelew(pMes integer, pAnio integer) returns void AS $$
 
 BEGIN
@@ -238,7 +248,7 @@ $$ LANGUAGE 'plpgsql';
 
 --select carga_datawarehouse_trelew(04, 2011);
 
-
+--Script ETL para la sucursal de Comodoro
 CREATE OR REPLACE FUNCTION carga_datawarehouse_comodoro(pMes int, pAnio int) returns void as $$
 DECLARE
 
@@ -327,6 +337,7 @@ $$ LANGUAGE plpgsql;
 
 --SELECT carga_datawarehouse_comodoro(8,2011);
 
+--Script ETL para la sucursal de Esquel
 CREATE OR REPLACE FUNCTION carga_datawarehouse_esquel(pMes int, pAnio int) returns void as $$
 DECLARE
 
@@ -414,10 +425,3 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
---select dblink_connect('conexion_DW_comodoro', 'dbname=comodoro');
---select dblink_connect('conexion_DW_esquel', 'dbname=esquel');
---select dblink_connect('conexion_DW_trelew', 'dbname=trelew');
-
---SELECT carga_datawarehouse_trelew(12,2013);
---SELECT carga_datawarehouse_comodoro(12,2013);
---SELECT carga_datawarehouse_esquel(12,2013);

@@ -1,5 +1,5 @@
 ﻿
-/*Carga masiva de la sucursal Comodoro Rivadavia*/
+/*Carga masiva de la sucursal Esquel*/
 
 /*Sistema de facturacion nuevo (desde enero 2011)*/
 
@@ -39,18 +39,13 @@ insert into clientes values(30, 'Jorge James', 2, 'Ruta 3');
 
 insert into clientes values(10, 'Beatriz Pineda', 4, 'Sargento Cabral 123');
 
-
-delete from clientes where codigo_cliente = 40;
-
-
 ------------------------------------------------------------------------------------------------------------------------
+
+--Alta de categorias
 
 insert into categoria values(1, 10, 'frutas');
 
 insert into categoria values(2, 20, 'hortalizas y legumbres');
-
-
-delete from categoria where codigo_categoria = 3;
 
 ---------------------------------------------------------------------------------------------------------------------------
 
@@ -77,9 +72,9 @@ insert into producto values(18, 'Papa', 2, 24, 21.50);
 insert into producto values(19, 'Pepino', 2, 21, 42);
 insert into producto values(20, 'Pimientos', 2, 22, 34);
 
-select * from producto;
-
 ---------------------------------------------------------------------------------------------------------------------------
+
+--ALta de medios de pago
 
 insert into medio_de_pago values(10, 'Efectivo', 1, 1, 'Compra');
 
@@ -91,9 +86,10 @@ insert into medio_de_pago values(13, 'Tarjeta de debito', 4, 4, 'Compra con tarj
 
 insert into medio_de_pago values(14, 'Cheque', 5, 5, 'Compra con cheque');
 
-select * from medio_de_pago;
 ----------------------------------------------------------------------------------------------------------------------------
 
+--Funcion que se utiliza para obtener una fecha
+--Retorna una fecha (tipo date) al azar entre 2011 y 2017
 create or replace function fecha_al_azar() returns date as $$
 begin
 	return (select date(now() - trunc(random() * 2300) * '1 day'::interval));
@@ -124,6 +120,8 @@ $$ language plpgsql;
 
 ---------------------------------------------------------------------------------------------------------------------------------
 
+--Funcion de carga masiva para la sucursal, se dan de alta las facturas (tabla factura) y 
+--por cada factura 15 detalles de factura (tabla detalle_de_factura)
 create or replace function carga_de_ventas() returns void as
 $body$
 declare
